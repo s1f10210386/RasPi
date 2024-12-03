@@ -78,3 +78,20 @@ keypoints = run_inference(interpreter, input_image)
 
 # 結果の確認
 print("推論結果:", keypoints)
+
+# 可視化用の元画像を読み込む
+original_image = cv2.imread(image_path)
+height, width, _ = original_image.shape
+
+# 各関節を描画
+for idx, keypoint in enumerate(keypoints[0][0]):  # [1, 1, 17, 3] の形状なので [0][0] でアクセス
+    x, y, confidence = keypoint
+    if confidence > 0.01:  # 信頼度が高い場合だけ描画
+        cx, cy = int(x * width), int(y * height)  # 元画像サイズにスケール
+        cv2.circle(original_image, (cx, cy), 5, (0, 255, 0), -1)  # 緑の点を描画
+        print(f"関節 {idx}: スケール後の座標: ({cx}, {cy}), 信頼度: {confidence:.2f}")
+
+# 結果を保存
+result_path = "result_image.jpg"
+cv2.imwrite(result_path, original_image)
+print(f"結果画像を保存しました: {result_path}")
