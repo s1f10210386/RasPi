@@ -43,8 +43,8 @@ import numpy as np
 import cv2
 
 # モデルと画像のパス
-model_path = "../models/movenet_singlepose_lightning.tflite"
-image_path = "../images/captured_image.jpg"
+model_path = "3.tflite"
+image_path = "test_image.jpg"
 
 # TensorFlowを使用した画像前処理
 def preprocess_image(image_path):
