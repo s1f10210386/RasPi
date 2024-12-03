@@ -25,7 +25,7 @@ height, width, _ = original_image.shape
 # 各関節を描画
 for idx, keypoint in enumerate(keypoints):
     x, y, confidence = keypoint
-    if confidence > 0.2:  # 信頼度が高い場合だけ描画
+    if confidence > 0.01:  # 信頼度が高い場合だけ描画
         cx, cy = int(x * width), int(y * height)  # 元画像サイズにスケール
         cv2.circle(original_image, (cx, cy), 10, (0, 255, 0), -1)  # 緑の点を描画
 
