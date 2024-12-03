@@ -86,7 +86,7 @@ height, width, _ = original_image.shape
 # 各関節を描画
 for idx, keypoint in enumerate(keypoints[0][0]):  # [1, 1, 17, 3] の形状なので [0][0] でアクセス
     x, y, confidence = keypoint
-    if confidence > 0.01:  # 信頼度が高い場合だけ描画
+    if confidence > 0.04:  # 信頼度が高い場合だけ描画
         cx, cy = int(x * width), int(y * height)  # 元画像サイズにスケール
         cv2.circle(original_image, (cx, cy), 5, (0, 255, 0), -1)  # 緑の点を描画
         print(f"関節 {idx}: スケール後の座標: ({cx}, {cy}), 信頼度: {confidence:.2f}")
