@@ -1,29 +1,22 @@
-import tensorflow as tf
 import cv2
-import numpy as np
 
-def load_movenet_model():
-    model = tf.saved_model.load('movenet_model')
-    return model
+# カメラを起動（0はデフォルトカメラを指定）
+cap = cv2.VideoCapture(0)  # ラズパイのカメラモジュールでは VideoCapture(0) で動作する場合が多い
 
-def detect_poses(image_path, model):
-    # 画像読み込み
-    image = cv2.imread(image_path)
-    input_image = tf.convert_to_tensor(image)
-    input_image = tf.expand_dims(input_image, axis=0)
-    
-    # 姿勢推定
-    results = model(input_image)
-    
-    return results
+if not cap.isOpened():
+    print("カメラが開けません。接続を確認してください。")
+    exit()
 
-def main():
-    model = load_movenet_model()
-    image_path = 'test_image.jpg'
-    poses = detect_poses(image_path, model)
-    
-    # 結果の表示・保存処理
-    print(poses)
+# 1フレームをキャプチャ
+ret, frame = cap.read()
 
-if __name__ == '__main__':
-    main()
+if ret:
+    # フレームを保存
+    filename = "captured_image.jpg"
+    cv2.imwrite(filename, frame)
+    print(f"静止画を保存しました: {filename}")
+else:
+    print("フレームのキャプチャに失敗しました。")
+
+# カメラを解放
+cap.release()
